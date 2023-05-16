@@ -24,18 +24,18 @@ function success(position){
 const btn = document.getElementById('getWeatherBtn');
 btn.addEventListener("click", function(){
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", `localhost:3000/weather/${latitude}/${longitude}`); // opens a get request
+  xhr.open("GET", `http://localhost:3000/weather/${latitude}/${longitude}`); // opens a get request
   xhr.send(); // sends the request
 
   xhr.onload = function() {
     const body = JSON.parse(xhr.responseText)
     let temperature = body.temperature;
     let weatherStatus = body.weatherStatus;
-    document.getElementById("temperature").innerHTML = `temperature: ${temperature}°F`;
+    document.getElementById("temperature").innerHTML = `temperature: ${temperature}\u00B0F`;
     document.getElementById("weatherStatus").innerHTML = `weatherStatus: ${weatherStatus}`;
   }
   const xhr2 = new XMLHttpRequest();
-  xhr2.open("Get", `localhost:3000/forecast/${latitiude}/${longitude}`);
+  xhr2.open("GET", `http://localhost:3000/5day/${latitude}/${longitude}`);
   xhr2.send();
 
   xhr2.onload = function() {
@@ -43,13 +43,7 @@ btn.addEventListener("click", function(){
     let forecast = body.forecast;
     let forecastElements = document.getElementsByClassName("forecast");
     for (let i = 0; i < forecast.length; i++) {
-      forecastElements[i].innerHTML = `${forecast[i].dayName}: ${forecast[i].temp}°F`;
+      forecastElements[i].innerHTML = `${forecast[i].dayName} : ${forecast[i].temp}\u00B0F`;
     }
 }
-
-  let forecast = [["M", 52], ["Tu", 53], ["W", 54], ["Th", 55], ["F", 56]] // Nested array of redefines day/forecast pairs
-  let forecastElements = document.getElementsByClassName("forecast"); // setting forecastElement to a array of divs with 
-  for (let i = 0; i < forecast.length; i++) { // For loop that goes from the 0th index to the length - 1 index 
-      forecastElements[i].innerHTML = forecast[i][0] + ": " + forecast[i][1] + "\u00B0F"; // Sets the innerHTML of the i'th element to a string in the format of "Day: Temp F"
-    }
 })
